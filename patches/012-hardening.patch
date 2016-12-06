@@ -1,0 +1,98 @@
+Description: Revise Makefiles to allow hardening buildflags to work
+ With helpful hints from "Debian: how to use blhc to solve hardening issues
+ when packaging" at http://eriberto.pro.br/blog/?p=2222
+ and from https://wiki.debian.org/HardeningWalkthrough
+ .
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -1,7 +1,6 @@
+-
+-CC=gcc
+-CFLAG=-O2 -g -Wall -Iinclude
+-LIBS= -Llib -lhz
++CC ?= gcc
++CFLAGS := -O2 -g -Wall -Iinclude $(CFLAGS)
++LIBS = -Llib -lhz
+ 
+ .PHONY: all hzlib clean install-home install
+ 
+@@ -10,13 +9,13 @@
+ autob5: autogb
+ 	rm -f autob5;ln -s autogb autob5
+ autogb:autogb.c  hzlib
+-	$(CC) $(CFLAG) $(LIBS) autogb.c -lhz -o autogb
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(LIBS) autogb.c -lhz -o autogb
+ autogb-static:autogb.c  hzlib
+-	$(CC) $(CFLAG) autogb.c lib/libhz.a -o autogb
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) autogb.c lib/libhz.a -o autogb
+ hzlib:
+-	cd hzconvert;make
++	cd hzconvert; make -e
+ xchat-plugins: 
+-	cd contrib/xchat-plugins;make
++	cd contrib/xchat-plugins; make -e
+ clean:
+ 	rm -f autob5 autogb *.o *~
+ 	rm -f include/*~
+--- a/hzconvert/Makefile
++++ b/hzconvert/Makefile
+@@ -1,5 +1,6 @@
+-CC=gcc -I../include
+-CFLAGS=-O2 -Wall -g -D_REENTRANT
++CC ?= gcc
++CFLAGS := -O2 -Wall -g -D_REENTRANT $(CFLAGS)
++INCLUDES += -I../include
+ SHARED_LIB=libhz.so
+ SHARED_LIB_MAJOR=$(SHARED_LIB).0
+ SHARED_LIB_MINOR=$(SHARED_LIB_MAJOR).0
+@@ -7,15 +8,15 @@
+ STATIC_OBJS=b2g.static.o b2u.static.o g2u.static.o hz2gb.static.o b2g_tables.static.o b2u_tables.static.o g2u_tables.static.o io.static.o unicode.static.o judge.static.o judge3.static.o gbpercent.static.o b5percent.static.o search.static.o 
+ 
+ %.o:%.c
+-	$(CC) -fPIC $(CFLAGS) -c $<
++	$(CC) -fPIC $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -c $<
+ 
+ %.static.o:%.c
+-	$(CC)  $(CFLAGS) -c $< -o $*.static.o
++	$(CC) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) -c $< -o $*.static.o
+ 
+ all: share-lib static-lib
+ 
+ share-lib: $(OBJS)
+-	gcc -fPIC -shared -Wl,-soname,$(SHARED_LIB_MAJOR) -o ../lib/$(SHARED_LIB_MINOR)  $(OBJS) -ldl
++	$(CC) -fPIC -shared -Wl,-soname,$(SHARED_LIB_MAJOR) -o ../lib/$(SHARED_LIB_MINOR)  $(OBJS) -ldl $(LDFLAGS)
+ 	rm -f ../lib/$(SHARED_LIB_MAJOR)
+ 	rm -f ../lib/$(SHARED_LIB)
+ 	cd ../lib;ln -s $(SHARED_LIB_MINOR) $(SHARED_LIB_MAJOR)
+--- a/contrib/xchat-plugins/Makefile
++++ b/contrib/xchat-plugins/Makefile
+@@ -1,12 +1,15 @@
+-LDFLAGS = -g
+-CFLAGS = -Wall
+-CC = gcc
+-LIBS= -L../../lib
++LDFLAGS += -g
++CFLAGS := -Wall $(CFLAGS)
++CC ?= gcc
++LIBS = -L../../lib
++
++all: xchat-autogb.so xchat-autob5.so
+ 
+-all:xchat-autogb.so xchat-autob5.so
+ xchat-autogb.so:	xchat-autogb.c
+-	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autogb.so -o $@ $< -lhz -lc `pkg-config --cflags gtk+-2.0`
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autogb.so -o $@ $< -lhz -lc `pkg-config --cflags gtk+-2.0`
++
+ xchat-autob5.so:	xchat-autob5.c
+-	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autob5.so -o $@ $< -lhz  -lc `pkg-config --cflags gtk+-2.0`
++	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autob5.so -o $@ $< -lhz  -lc `pkg-config --cflags gtk+-2.0`
++
+ clean:
+ 	rm -rf *~ xchat-autogb.so xchat-autob5.so

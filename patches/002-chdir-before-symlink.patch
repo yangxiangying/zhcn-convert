@@ -1,0 +1,19 @@
+Description: Change directory before creating autob5 symlink
+ For better code readability perhaps?
+ .
+ Committed after 2001-02-06 (0.3.9-1) but on or before 2001-07-18 (0.3.13-3).
+Author: Yu Guanghui <ygh@debian.org>
+Origin: vendor
+Forwarded: no
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -38,4 +38,4 @@
+ 	install -m 755 contrib/xchat-plugins/xchat-autogb.so $(DESTDIR)/usr/share/zh-autoconvert
+ 	install -m 755 contrib/xchat-plugins/xchat-autob5.so $(DESTDIR)/usr/share/zh-autoconvert
+ 	install -m 644 include/*.h  $(DESTDIR)/usr/include
+-	ln -s autogb $(DESTDIR)/usr/bin/autob5
++	cd $(DESTDIR)/usr/bin; ln -s autogb $(DESTDIR)/usr/bin/autob5

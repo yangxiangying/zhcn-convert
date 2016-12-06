@@ -1,0 +1,15 @@
+001-build-static-library.patch
+002-chdir-before-symlink.patch
+003-strip-binaries.patch
+004-delete-empty-default-label-for-gcc-3.4.patch
+005-move-plugins-to-usr-lib.patch
+006-add-exit.patch
+007-migrate-xchat-plugins-to-gtk2.patch
+008-add-missing-includes.patch
+009-add-placeholder-README-for-lib.patch
+010-create-destination-directories-in-Makefile.patch
+011-do-not-strip-binaries.patch
+012-hardening.patch
+013-fix-xchat-plugin-compile-warnings.patch
+014-convert-comments-to-utf8.patch
+015-convert-docs-to-utf8.patch

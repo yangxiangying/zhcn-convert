@@ -1,0 +1,5 @@
+version=3
+https://code.google.com/p/libhz/downloads/list .*/zh-autoconvert-(\d\S*)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))
+
+# Was
+# ftp://ftp.dlut.edu.cn/pub/PEOPLE/saka/autoconvert-(.+)\.tar\.gz

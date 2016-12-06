@@ -1,0 +1,43 @@
+Description: Extend hzconvert/Makefile to build static library too
+ Committed after 2001-02-06 (0.3.9-1) but on or before 2001-07-18 (0.3.13-3).
+Author: Yu Guanghui <ygh@debian.org>
+Origin: vender
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/hzconvert/Makefile
++++ b/hzconvert/Makefile
+@@ -1,22 +1,26 @@
+ CC=gcc -I../include
+-CFLAGS=-O2 -Wall -g
++CFLAGS=-O2 -Wall -g -D_REENTRANT
+ SHARED_LIB=libhz.so
+ SHARED_LIB_MAJOR=$(SHARED_LIB).0
+ SHARED_LIB_MINOR=$(SHARED_LIB_MAJOR).0
+ OBJS=b2g.o b2u.o g2u.o hz2gb.o b2g_tables.o b2u_tables.o g2u_tables.o io.o unicode.o judge.o judge3.o gbpercent.o b5percent.o search.o 
++STATIC_OBJS=b2g.static.o b2u.static.o g2u.static.o hz2gb.static.o b2g_tables.static.o b2u_tables.static.o g2u_tables.static.o io.static.o unicode.static.o judge.static.o judge3.static.o gbpercent.static.o b5percent.static.o search.static.o 
+ 
+-%.o: %.c
++%.o:%.c
+ 	$(CC) -fPIC $(CFLAGS) -c $<
+ 
+-all: libhzconvert
++%.static.o:%.c
++	$(CC)  $(CFLAGS) -c $< -o $*.static.o
+ 
+-libhzconvert: $(OBJS)
+-	ar rs  ../lib/libhz.a $(OBJS)
++all: share-lib static-lib
++
++share-lib: $(OBJS)
+ 	gcc -fPIC -shared -Wl,-soname,$(SHARED_LIB_MAJOR) -o ../lib/$(SHARED_LIB_MINOR)  $(OBJS) -ldl
+ 	rm -f ../lib/$(SHARED_LIB_MAJOR)
+ 	rm -f ../lib/$(SHARED_LIB)
+ 	cd ../lib;ln -s $(SHARED_LIB_MINOR) $(SHARED_LIB_MAJOR)
+ 	cd ../lib;ln -s $(SHARED_LIB_MAJOR) $(SHARED_LIB)
+-
++static-lib: $(STATIC_OBJS)
++	ar rs  ../lib/libhz.a $(STATIC_OBJS)
+ clean:
+ 	rm -f *.o *~ ../lib/lib*

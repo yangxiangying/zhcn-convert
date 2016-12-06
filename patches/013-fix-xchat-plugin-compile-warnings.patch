@@ -1,0 +1,549 @@
+Description: Fix autogb/autob5 XChat plugin compiler warnings
+ Update XChat plugin header files to that found in
+ .
+     http://xchat.org/files/source/1.8.9/xchat-1.8.9.tar.bz2
+ .
+ with minor modifications to resolve compiler warnings, though
+ it is irrelevant now that XChat 1.8.9 is over 13 years old
+ and XChat 2.x has long since moved to a new and incompatible
+ plugin API.
+ .
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/contrib/xchat-plugins/plugin.h
++++ b/contrib/xchat-plugins/plugin.h
+@@ -11,8 +11,9 @@
+ 		XP_CHANSETKEY, XP_CHANSETLIMIT, XP_CHANHOP, XP_CHANOP, XP_CHANVOICE,
+ 		XP_CHANBAN, XP_CHANRMKEY, XP_CHANRMLIMIT, XP_CHANDEHOP, XP_CHANDEOP,
+ 		XP_CHANDEVOICE, XP_CHANUNBAN, XP_CHANEXEMPT, XP_CHANRMEXEMPT,
+-		XP_CHANINVITE, XP_CHANRMINVITE, XP_INBOUND, XP_TE_JOIN,
+-		XP_TE_CHANACTION, XP_TE_CHANMSG, XP_TE_PRIVMSG, XP_TE_CHANGENICK,
++		XP_CHANINVITE, XP_CHANRMINVITE, XP_INBOUND, XP_HIGHLIGHT,
++		XP_TE_JOIN, XP_TE_CHANACTION, XP_TE_HCHANACTION, XP_TE_CHANMSG,
++		XP_TE_HCHANMSG, XP_TE_PRIVMSG, XP_TE_CHANGENICK,
+ 		XP_TE_NEWTOPIC, XP_TE_TOPIC, XP_TE_KICK, XP_TE_PART, XP_TE_CHANDATE,
+ 		XP_TE_TOPICDATE, XP_TE_QUIT, XP_TE_PINGREP, XP_TE_NOTICE, XP_TE_UJOIN,
+ 		XP_TE_UCHANMSG, XP_TE_DPRIVMSG, XP_TE_UCHANGENICK, XP_TE_UKICK,
+@@ -27,29 +28,29 @@
+ 		XP_TE_MOTDSKIP, XP_TE_SERVTEXT, XP_TE_INVITED, XP_TE_USERSONCHAN,
+ 		XP_TE_NICKCLASH, XP_TE_NICKFAIL, XP_TE_UKNHOST, XP_TE_CONNFAIL,
+ 		XP_TE_CONNECT, XP_TE_CONNECTED, XP_TE_SCONNECT, XP_TE_DISCON,
+-		XP_TE_NODCC, XP_TE_DELNOTIFY, XP_TE_ADDNOTIFY, XP_TE_WINTYPE,
++		XP_TE_NODCC, XP_TE_DELNOTIFY, XP_TE_ADDNOTIFY,
+ 		XP_TE_CHANMODES, XP_TE_RAWMODES, XP_TE_KILL, XP_TE_DCCSTALL,
+ 		XP_TE_DCCTOUT, XP_TE_DCCCHATF, XP_TE_DCCFILEERR, XP_TE_DCCRECVERR,
+ 		XP_TE_DCCRECVCOMP, XP_TE_DCCCONFAIL, XP_TE_DCCCON, XP_TE_DCCSENDFAIL,
+ 		XP_TE_DCCSENDCOMP, XP_TE_DCCOFFER, XP_TE_DCCABORT, XP_TE_DCCIVAL,
+-		XP_TE_DCCCHATREOFFER, XP_TE_DCCCHATOFFERING, XP_TE_DCCDRAWOFFER,
++		XP_TE_DCCCHATREOFFER, XP_TE_DCCCHATOFFERING,
+ 		XP_TE_DCCCHATOFFER, XP_TE_DCCRESUMEREQUEST, XP_TE_DCCSENDOFFER,
+ 		XP_TE_DCCGENERICOFFER, XP_TE_NOTIFYONLINE, XP_TE_NOTIFYNUMBER,
+ 		XP_TE_NOTIFYEMPTY, XP_TE_NOCHILD, XP_TE_ALREADYPROCESS,
+ 		XP_TE_SERVERLOOKUP, XP_TE_SERVERCONNECTED, XP_TE_SERVERERROR,
+ 		XP_TE_SERVERGENMESSAGE, XP_TE_FOUNDIP, XP_TE_DCCRENAME, XP_TE_CTCPSEND,
+-		XP_TE_MSGSEND, XP_TE_NOTICESEND, XP_TE_WALLOPS, XP_HIGHLIGHT,
++		XP_TE_MSGSEND, XP_TE_NOTICESEND, XP_TE_WALLOPS,
+ 		XP_TE_IGNOREHEADER, XP_TE_IGNORELIST, XP_TE_IGNOREFOOTER,
+ 		XP_TE_IGNOREADD, XP_TE_IGNOREREMOVE, XP_TE_RESOLVINGUSER,
+ 		XP_TE_IGNOREEMPTY, XP_TE_IGNORECHANGE, XP_TE_NOTIFYOFFLINE,
+ 		XP_TE_MALFORMED_FROM, XP_TE_MALFORMED_PACKET, XP_TE_PARTREASON,
+ 		XP_TE_UPARTREASON, XP_TE_NEWMAIL, XP_TE_MOTD, XP_TE_PINGTIMEOUT,
+-		XP_TE_UINVITE,
+-		XP_IF_SEND, XP_IF_RECV,
++		XP_TE_UINVITE, XP_TE_BANLIST, XP_TE_CHANLISTHEAD, XP_TE_NOTIFYHEAD,
++		XP_TE_DCCHEAD,
++		XP_IF_SEND, XP_IF_RECV, XP_TE_CHANNOTICE, 
+ 		NUM_XP
+ };
+ 
+-
+ #define	EMIT_SIGNAL(s, a, b, c, d, e, f) (fire_signal(s, a, b, c, d, e, f))
+ /* #define XP_CALLNEXT(s, a, b, c, d, e, f)  if (s != NULL) return s(a, b, c, d, e, f); return 0; */
+ /* #define XP_CALLNEXT_ANDSET(s, a, b, c, d, e, f) if (s != NULL) s(a, b, c, d, e, f); return 1; */
+@@ -57,7 +58,6 @@
+ #define XP_CALLNEXT(s, a, b, c, d, e, f) return 0;
+ #define XP_CALLNEXT_ANDSET(s, a, b, c, d, e, f) return 1;
+ 
+-extern int current_signal;
+ 
+ #ifdef USE_PLUGIN
+ 
+@@ -99,12 +99,24 @@
+ 	struct pevt_stage1 *next;
+ };
+ 
+-#ifndef	PLUGIN_C
+-/* extern int (*sighandler[NUM_XP]) (void *, void *, void *, void *, void *, char); */
++#ifndef PLUGIN_C
++int fire_signal (int, void *, void *, void *, void *, void *, char);
++#endif
++
++extern int current_signal;
+ extern void *signal_data;
+-extern struct xp_signal *sigroots[NUM_XP];
+-extern int fire_signal (int, void *, void *, void *, void *, void *, char);
++extern GSList *sigroots[NUM_XP];
++extern struct module *modules;
+ 
+-#endif
++int module_command (char *cmd, struct session *sess, char *tbuf,
++									char *word[], char *word_eol[]);
++int module_load (char *name, struct session *sess);
++int module_list (struct session *sess, char *tbuf, char *word[],
++								char *word_eol[]);
++int module_unload (char *name, struct session *sess);
++void module_setup (void);
++void signal_setup (void);
++void unhook_signal (struct xp_signal *);
++int hook_signal (struct xp_signal *);
+ 
+ #endif /* PLUGIN_H */
+--- /dev/null
++++ b/contrib/xchat-plugins/text.h
+@@ -0,0 +1,20 @@
++
++struct text_event
++{
++	char *name;
++	char **help;
++	char *def;
++	int num_args;
++	char *sound;
++};
++
++void PrintText (session *sess, char *text);
++void end_logging (int fd);
++void setup_logging (session *sess);
++void load_text_events (void);
++void pevent_save (char *fn);
++void printevent_setup (void);
++int pevt_build_string (char *input, char **output, int *max_arg);
++int text_event (int i);
++int pevent_load (char *filename);
++void pevent_make_pntevts (void);
+--- a/contrib/xchat-plugins/xchat.h
++++ b/contrib/xchat-plugins/xchat.h
+@@ -2,23 +2,12 @@
+ #include "../../config.h"
+ #endif
+ 
+-#ifndef PACKAGE				/* fixes prob compiling on RH5.2, *shrug* */
+-#define PACKAGE "xchat"
+-#endif
+-#ifndef VERSION
+-#define VERSION "1.5.3"
+-#endif
+-
+ #ifdef USE_MYGLIB
+ #include "../fe-text/myglib.h"
+ #else
+ #include <glib.h>
+ #endif
+-#include <time.h>
+-#include <sys/types.h>
+-#include <sys/socket.h>
+-#include <netinet/in.h>
+-#include <arpa/inet.h>
++#include <time.h>			/* need time_t */
+ 
+ #include "history.h"
+ 
+@@ -27,10 +16,14 @@
+ #endif
+ 
+ #ifdef USE_DEBUG
+-#define malloc xchat_malloc
+-#define realloc xchat_realloc
+-#define free xchat_free
+-#define strdup xchat_strdup
++#define malloc(n) xchat_malloc(n, __FILE__, __LINE__)
++#define realloc(n, m) xchat_realloc(n, m, __FILE__, __LINE__)
++#define free(n) xchat_free(n, __FILE__, __LINE__)
++#define strdup(n) xchat_strdup(n, __FILE__, __LINE__)
++void *xchat_malloc (int size, char *file, int line);
++void *xchat_strdup (char *str, char *file, int line);
++void xchat_free (void *buf, char *file, int line);
++void *xchat_realloc (char *old, int len, char *file, int line);
+ #endif
+ 
+ #ifdef SOCKS
+@@ -47,24 +40,59 @@
+ 
+ #ifdef __EMX__						  /* for o/s 2 */
+ #define OFLAGS O_BINARY
++#define strcasecmp stricmp
++#define strncasecmp strnicmp
++#define PATH_MAX MAXPATHLEN
++#define FILEPATH_LEN_MAX MAXPATHLEN
++#else
++#ifdef WIN32
++#define OFLAGS O_BINARY
++#define sleep(t) _sleep(t*1000)
++#include <direct.h>
++#define	F_OK	0
++#define	X_OK	1
++#define	W_OK	2
++#define	R_OK	4
++#ifndef S_ISDIR
++#define	S_ISDIR(m)	((m) & _S_IFDIR)
++#endif
++#define NETWORK_PRIVATE
+ #else
+ #define OFLAGS 0
+ #endif
++#endif
+ 
+-#define FONTNAMELEN		127
+-#define PATHLEN			255
+-#define NICKLEN			64				/* including the NULL, so 63 really */
+-#define CHANLEN			202
++#define FONTNAMELEN	127
++#define PATHLEN		255
++#define NICKLEN		64				/* including the NULL, so 63 really */
++#define CHANLEN		202
++#define PDIWORDS		32
+ 
+ #define safe_strcpy(dest,src,len)	strncpy(dest,src,len); \
+ 												dest[len-1] = 0;
+ 
++#if defined(ENABLE_NLS) && !defined(_)
++#  include <libintl.h>
++#  define _(x) gettext(x)
++#  ifdef gettext_noop
++#    define N_(String) gettext_noop (String)
++#  else
++#    define N_(String) (String)
++#  endif
++#endif
++#if !defined(_)
++#  define N_(String) (String)
++#  define _(x) (x)
++#endif
++
+ struct nbexec
+ {
+-	int myfd, childfd;
++	int myfd;
+ 	int childpid;
+ 	int tochannel;					  /* making this int keeps the struct 4-byte aligned */
+ 	int iotag;
++	char *linebuf;
++	int buffill;
+ 	struct session *sess;
+ };
+ 
+@@ -78,23 +106,28 @@
+ 	char nick_suffix[4];			/* Only ever holds a one-character string. */
+ 	char awayreason[256];
+ 	char quitreason[256];
++	char partreason[256];
+ 	char font_normal[FONTNAMELEN + 1];
+ 	char dialog_font_normal[FONTNAMELEN + 1];
++	char font_shell[FONTNAMELEN + 1];
+ 	char doubleclickuser[256];
+ 	char sounddir[PATHLEN + 1];
+ 	char soundcmd[PATHLEN + 1];
+ 	char background[PATHLEN + 1];
+ 	char background_dialog[PATHLEN + 1];
+ 	char dccdir[PATHLEN + 1];
+-	char bluestring[64];
++	char bluestring[300];
+ 	char dnsprogram[72];
+ 	char hostname[127];
++	char cmdchar[4];
+ 	char trans_file[256];
+ 	char logmask[256];
++	char stamp_format[64];
++	char timestamp_log_format[64];
+ 
+ 	char proxy_host[64];
+ 	int proxy_port;
+-	int proxy_type;		/* 0 = disabled, 1 = socks4, 3 = wingate */
++	int proxy_type; /* 0=disabled, 1=wingate 2=socks4, 3=socks5, 4=http */
+ 
+ 	int first_dcc_send_port;
+ 	int last_dcc_send_port;
+@@ -125,10 +158,14 @@
+ 	int bantype;
+ 	int userlist_sort;
+ 	int nu_color;
+-	int bt_color;
+ 	unsigned long local_ip;
+ 	unsigned long dcc_ip;
++	char dcc_ip_str[16];
+ 
++	unsigned int mainwindow_save;
++	unsigned int perc_color;
++	unsigned int perc_ascii;
++	unsigned int hilightnick;
+ 	unsigned int use_trans;
+ 	unsigned int nopanel;
+ 	unsigned int autosave;
+@@ -140,34 +177,41 @@
+ 	unsigned int servernotice;
+ 	unsigned int wallops;
+ 	unsigned int skipmotd;
+-	unsigned int away;
+ 	unsigned int autorejoin;
+ 	unsigned int colorednicks;
+-	unsigned int nochanmodebuttons;
+-	unsigned int nouserlistbuttons;
+-   unsigned int showhostname_in_userlist;
++	unsigned int chanmodebuttons;
++	unsigned int userlistbuttons;
++	unsigned int userlist_icons;
++	unsigned int showhostname_in_userlist;
+ 	unsigned int nickcompletion;
+ 	unsigned int old_nickcompletion;
+ 	unsigned int tabchannels;
+-	unsigned int nopaned;
++	unsigned int paned_userlist;
+ 	unsigned int autodccchat;
+ 	unsigned int autodccsend;
+ 	unsigned int autoresume;
+-	unsigned int noautoopendccsendwindow;
+-	unsigned int noautoopendccrecvwindow;
+-	unsigned int noautoopendccchatwindow;
++	unsigned int autoopendccsendwindow;
++	unsigned int autoopendccrecvwindow;
++	unsigned int autoopendccchatwindow;
+ 	unsigned int transparent;
+ 	unsigned int tint;
+ 	unsigned int dialog_transparent;
+ 	unsigned int dialog_tint;
++	unsigned int dialog_width;
++	unsigned int dialog_height;
+ 	unsigned int stripcolor;
+ 	unsigned int timestamp;
+ 	unsigned int fastdccsend;
++	unsigned int dcc_send_fillspaces;
++	unsigned int dcc_remove;
+ 	unsigned int skipserverlist;
+ 	unsigned int filterbeep;
+ 	unsigned int beepmsg;
++	unsigned int beepchans;
++	unsigned int truncchans;
+ 	unsigned int privmsgtab;
+ 	unsigned int logging;
++	unsigned int timestamp_logs;
+ 	unsigned int newtabstofront;
+ 	unsigned int dccwithnick;
+ 	unsigned int hilitenotify;
+@@ -176,14 +220,18 @@
+ 	unsigned int panelize_hide;
+ 	unsigned int panel_vbox;
+ 	unsigned int raw_modes;
+-	unsigned int no_server_logs;
+ 	unsigned int show_away_once;
+ 	unsigned int show_away_message;
+-	unsigned int nouserhost;
++	unsigned int auto_unmark_away;
++	unsigned int userhost;
+ 	unsigned int use_server_tab;
++	unsigned int notices_tabs;
+ 	unsigned int style_namelistgad;
+ 	unsigned int style_inputbox;
+ 	unsigned int windows_as_tabs;
++#ifdef USE_JCODE
++	unsigned int kanji_conv;
++#endif
+ 	unsigned int use_fontset;
+ 	unsigned int indent_nicks;
+ 	unsigned int show_separator;
+@@ -195,7 +243,6 @@
+ 	unsigned int wordwrap;
+ 	unsigned int dialog_wordwrap;
+ 	unsigned int mail_check;
+-	unsigned int double_buffer;
+ 	unsigned int throttle;
+ 	unsigned int fudgeservernotice;
+ 	unsigned int topicbar;
+@@ -203,6 +250,7 @@
+ 	unsigned int hidemenu;
+ 	unsigned int perlwarnings;
+ 	unsigned int lagometer;
++	unsigned int throttlemeter;
+ 	unsigned int hebrew;
+ 	unsigned int limitedtabhighlight;
+ 	unsigned int pingtimeout;
+@@ -212,15 +260,23 @@
+ 	unsigned int inputgad_superfocus;
+ 	unsigned int nickgad;
+ 	unsigned int channelbox;
++	unsigned int persist_chans;
+ 
+ 	unsigned int ctcp_number_limit;	/*flood */
+ 	unsigned int ctcp_time_limit;	/*seconds of floods */
+ 
+ 	unsigned int msg_number_limit;	/*same deal */
+ 	unsigned int msg_time_limit;
+-
+ };
+ 
++/* Session types */
++#define SESS_SERVER	1
++#define SESS_CHANNEL	2
++#define SESS_DIALOG	3
++#define SESS_SHELL	4
++#define SESS_NOTICES	5
++#define SESS_SNOTICES	6
++
+ struct session
+ {
+ 	struct server *server;
+@@ -230,7 +286,6 @@
+ 	char willjoinchannel[CHANLEN];	  /* /join done for this channel */
+ 	char channelkey[64];			  /* XXX correct max length? */
+ 	int limit;						  /* channel user limit */
+-	int channelflags;				  /* channel flags (bitmap) */
+ 	int logfd;
+ 
+ 	char lastnick[NICKLEN];			  /* last nick you /msg'ed */
+@@ -243,6 +298,10 @@
+ 	int total;							/* num. of users in channel */
+ 
+ 	char *quitreason;
++	char *topic;
++	char *current_modes;					/* free() me */
++
++	int mode_timeout_tag;
+ 
+ 	struct session *lastlog_sess;
+ 	struct setup *setup;
+@@ -251,18 +310,16 @@
+ 	struct session_gui *gui;		/* initialized by fe_new_window */
+ 
+ 	int userlisthidden;
+-	int is_shell:1;
++	int type;
+ 	int is_tab:1;			/* is this a tab or toplevel window? */
+-	int is_dialog:1;
+-	int is_server:1;		/* for use_server_tab feature */
+ 	int new_data:1;		/* new data avail? (red tab) */
+-	int nick_said:1;		/* your nick mentioned? (green tab) */
++	int nick_said:1;		/* your nick mentioned? (blue tab) */
+ 	int ignore_date:1;
+ 	int ignore_mode:1;
+ 	int ignore_names:1;
+ 	int end_of_names:1;
+ 	int doing_who:1;		/* /who sent on this channel */
+- 	int highlight_tab:1;	/* Highlight the channel tab (red-style) */
++	int highlight_tab:1;	/* Highlight the channel tab (red-style) */
+ };
+ 
+ typedef struct session session;
+@@ -271,6 +328,8 @@
+ {
+ 	int port;
+ 	int sok;
++	int sok4;
++	int sok6;
+ #ifdef USE_OPENSSL
+ 	SSL *ssl;
+ 	int ssl_do_connect_tag;
+@@ -288,26 +347,38 @@
+ 	char password[86];
+ 	char nick[NICKLEN];
+ 	char linebuf[522];				/* RFC says 512 including \r\n */
+-	int pos;
++	char *last_away_reason;
++	int pos;								/* current position in linebuf */
+ 	int nickcount;
+ 
++	char *chantypes;					/* for 005 numeric - free me */
++	char *chanmodes;					/* for 005 numeric - free me */
++	char *nick_prefixes;				/* e.g. "*@%+" */
++	char *nick_modes;					/* e.g. "aohv" */
++	char *bad_nick_prefixes;		/* for ircd that doesn't give the modes */
++	int modes_per_line;				/* 6 on undernet, 4 on efnet etc... */
++
++	char *eom_cmd;						/* end-of-motd command, free it! */
++
+ 	GSList *outbound_queue;
+-	time_t last_send;
+-	int bytes_sent;				  /* this second only */
++	int next_send;						/* cptr->since in ircu */
++	int sendq_len;						/* queue size */
+ 
+ 	struct session *front_session;
+ 
+ 	struct server_gui *gui;		  /* initialized by fe_new_server */
+ 
+-	int ctcp_counter;				  /*flood */
++	unsigned int ctcp_counter;	  /*flood */
+ 	time_t ctcp_last_time;
+ 
+-	int msg_counter;				  /*counts the msg tab opened in a certain time */
++	unsigned int msg_counter;	  /*counts the msg tab opened in a certain time */
+ 	time_t msg_last_time;
+ 
+ 	/*time_t connect_time;*/				/* when did it connect? */
+ 	time_t lag_sent;
+ 	time_t ping_recv;					/* when we last got a ping reply */
++	time_t away_time;					/* when we were marked away */
++	char *network;
+ 
+ 	int motd_skipped:1;
+ 	int connected:1;
+@@ -319,7 +390,11 @@
+ 	int end_of_motd:1;			  /* end of motd reached (logged in) */
+ 	int sent_quit:1;				  /* sent a QUIT already? */
+ 	int is_newtype:1;		/* undernet and dalnet need /list >0,<10000 */
+-	int six_modes:1;		/* undernet allows 6 modes per line */
++	int is_away:1;
++	int reconnect_away:1;		/* whether to reconnect in is_away state */
++	int dont_use_proxy:1;		/* to proxy or not to proxy */
++	int supports_watch:1;		/* supports the WATCH command */
++	int bad_prefix:1;				/* gave us a bad PREFIX= 005 number */
+ };
+ 
+ typedef struct server server;
+@@ -342,3 +417,12 @@
+ 	char nick[NICKLEN];
+ 	char *message;
+ };
++
++/* not just for popups, but used for usercommands, ctcp replies,
++   userlist buttons etc */
++
++struct popup
++{
++	char *cmd;
++	char *name;
++};
+--- a/contrib/xchat-plugins/history.h
++++ b/contrib/xchat-plugins/history.h
+@@ -8,6 +8,7 @@
+ 	int realpos;
+ };
+ 
+-
+ void history_add (struct history *his, char *text);
+ void history_free (struct history *his);
++char *history_up (struct history *his);
++char *history_down (struct history *his);
+--- a/contrib/xchat-plugins/xchat-autogb.c
++++ b/contrib/xchat-plugins/xchat-autogb.c
+@@ -3,6 +3,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include "xchat.h"
++#include "text.h"
+ #include "plugin.h"
+ #include "../../include/hz.h"
+ 
+--- a/contrib/xchat-plugins/xchat-autob5.c
++++ b/contrib/xchat-plugins/xchat-autob5.c
+@@ -3,6 +3,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include "xchat.h"
++#include "text.h"
+ #include "plugin.h"
+ #include "../../include/hz.h"
+ 

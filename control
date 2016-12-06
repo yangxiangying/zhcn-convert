@@ -1,0 +1,54 @@
+Source: zh-autoconvert
+Section: text
+Build-Depends: debhelper (>= 9), libgtk2.0-dev
+Priority: optional
+Maintainer: Debian Chinese Team <chinese-developers@lists.alioth.debian.org>
+Uploaders: Yu Guanghui <ygh@debian.org>, Anthony Fok <foka@debian.org>
+Standards-Version: 3.9.6
+Vcs-Git: git://anonscm.debian.org/chinese/zh-autoconvert.git
+Vcs-Browser: https://anonscm.debian.org/cgit/chinese/zh-autoconvert.git
+
+Package: zh-autoconvert
+Architecture: any
+Depends: libhz0 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Chinese HZ/GB/BIG5/UTF-16/UTF-7/UTF-8 encodings auto-converter
+ AutoConvert is an intelligent Chinese Encoding converter. It uses
+ builtin functions to judge the type of the input file’s Chinese
+ Encoding (such as GB/Big5/HZ), then converts the input file to any
+ type of Chinese Encoding you want. You can use autoconvert to handle
+ incoming mail, automatically converting messages to the Chinese
+ Encoding you want.  It can alse handle Unicode (UTF-16)/UTF-7/UTF-8 now.
+ .
+ This package contains the binary tools autogb and autob5, as well as
+ the corresponding autogb/autob5 plugins for XChat the IRC client.
+
+Package: libhz-dev
+Architecture: any
+Section: libdevel
+Depends: libhz0 (= ${binary:Version}), libc6-dev | libc-dev, ${misc:Depends}
+Description: Headers and static libraries for zh-autoconvert
+ AutoConvert is an intelligent Chinese Encoding converter. It uses
+ builtin functions to judge the type of the input file’s Chinese
+ Encoding (such as GB/Big5/HZ), then converts the input file to any
+ type of Chinese Encoding you want. You can use autoconvert to handle
+ incoming mail, automatically converting messages to the Chinese
+ Encoding you want.  It can alse handle Unicode (UTF-16)/UTF-7/UTF-8 now.
+ .
+ This package contains the development files (symlinks, headers, and object
+ files) needed to compile and link programs which use the zh-autoconvert
+ libhz library.
+
+Package: libhz0
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Chinese encoding autoconvert library
+ AutoConvert is an intelligent Chinese Encoding converter. It uses
+ builtin functions to judge the type of the input file’s Chinese
+ Encoding (such as GB/Big5/HZ), then converts the input file to any
+ type of Chinese Encoding you want. You can use autoconvert to handle
+ incoming mail, automatically converting messages to the Chinese
+ Encoding you want.  It can alse handle Unicode (UTF-16)/UTF-7/UTF-8 now.
+ .
+ This library provide the Chinese encoding judge function,
+ and the HZ/GB/Big5/UTF-16/UTF-7/UTF-8 convert functions.

@@ -1,0 +1,23 @@
+Description: Create destination usr/* directories in Makefile
+ As a necessary change for the upgrade from debhelper 1 to 9.
+ .
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -30,6 +30,10 @@
+ 	ln -s $(HOME)/bin/autogb $(HOME)/bin/autob5
+ 	chmod 755 $(HOME)/bin/autogb 
+ install:
++	install -d $(DESTDIR)/usr/bin
++	install -d $(DESTDIR)/usr/lib
++	install -d $(DESTDIR)/usr/include
++	install -d $(DESTDIR)/usr/lib/zh-autoconvert
+ 	install -s -m 755 autogb $(DESTDIR)/usr/bin
+ 	install -s -m 755 lib/libhz.so.0.0 $(DESTDIR)/usr/lib
+ 	cd $(DESTDIR)/usr/lib;ln -s  libhz.so.0.0 libhz.so.0

@@ -1,0 +1,36 @@
+Description: Strip binaries during install in Makefile
+ This patch is no longer the right way to strip binaries because it
+ precludes the use of DEB_BUILD_OPTIONS=nostrip (See Bug#438364).
+ .
+ Nevertheless, this patch is kept to preserve history, 
+ to be reverted in the new 011-do-not-strip-binaries.patch
+ that fixes #438364.
+ .
+ Committed after 2001-02-06 (0.3.9-1) but on or before 2001-07-18 (0.3.13-3).
+Author: Yu Guanghui <ygh@debian.org>
+Origin: vendor
+Forwarded: not-needed
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -30,12 +30,12 @@ install-home:
+ 	ln -s $(HOME)/bin/autogb $(HOME)/bin/autob5
+ 	chmod 755 $(HOME)/bin/autogb 
+ install:
+-	install -m 755 autogb $(DESTDIR)/usr/bin
+-	install -m 755 lib/libhz.so.0.0 $(DESTDIR)/usr/lib
++	install -s -m 755 autogb $(DESTDIR)/usr/bin
++	install -s -m 755 lib/libhz.so.0.0 $(DESTDIR)/usr/lib
+ 	cd $(DESTDIR)/usr/lib;ln -s  libhz.so.0.0 libhz.so.0
+ 	cd $(DESTDIR)/usr/lib;ln -s  libhz.so.0 libhz.so
+-	install -m 755 lib/libhz.a $(DESTDIR)/usr/lib
+-	install -m 755 contrib/xchat-plugins/xchat-autogb.so $(DESTDIR)/usr/share/zh-autoconvert
+-	install -m 755 contrib/xchat-plugins/xchat-autob5.so $(DESTDIR)/usr/share/zh-autoconvert
++	install -s -m 755 lib/libhz.a $(DESTDIR)/usr/lib
++	install -s -m 755 contrib/xchat-plugins/xchat-autogb.so $(DESTDIR)/usr/share/zh-autoconvert
++	install -s -m 755 contrib/xchat-plugins/xchat-autob5.so $(DESTDIR)/usr/share/zh-autoconvert
+ 	install -m 644 include/*.h  $(DESTDIR)/usr/include
+ 	cd $(DESTDIR)/usr/bin; ln -s autogb $(DESTDIR)/usr/bin/autob5

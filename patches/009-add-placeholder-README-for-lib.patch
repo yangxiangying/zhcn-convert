@@ -1,0 +1,15 @@
+Description: Add lib/README to keep the lib/ directory available during build
+ This is to counter the fact that Git does not store empty directories.
+ .
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- /dev/null
++++ b/lib/README
+@@ -0,0 +1,2 @@
++This file serves as a placeholder to ensure the lib/ directory exists
++to hold the newly compiled libhz files during build.

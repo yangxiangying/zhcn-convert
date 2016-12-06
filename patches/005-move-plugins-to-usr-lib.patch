@@ -1,0 +1,25 @@
+Description: Move architecture-dependent files to /usr/lib
+ Fixes Bug#392406: "ships architecture-dependent files in /usr/share"
+ reported by "Sam Hocevar (Debian packages)" <sam+deb@zoy.org> on 2006-10-11.
+ .
+ Committed to zh-autoconvert (0.3.16-2) on 2006-10-12.
+Author: Yu Guanghui <ygh@debian.org>
+Origin: vendor
+Bug-Debian: https://bugs.debian.org/392406
+Forwarded: no
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/Makefile
++++ b/Makefile
+@@ -35,7 +35,7 @@
+ 	cd $(DESTDIR)/usr/lib;ln -s  libhz.so.0.0 libhz.so.0
+ 	cd $(DESTDIR)/usr/lib;ln -s  libhz.so.0 libhz.so
+ 	install -s -m 755 lib/libhz.a $(DESTDIR)/usr/lib
+-	install -s -m 755 contrib/xchat-plugins/xchat-autogb.so $(DESTDIR)/usr/share/zh-autoconvert
+-	install -s -m 755 contrib/xchat-plugins/xchat-autob5.so $(DESTDIR)/usr/share/zh-autoconvert
++	install -s -m 755 contrib/xchat-plugins/xchat-autogb.so $(DESTDIR)/usr/lib/zh-autoconvert
++	install -s -m 755 contrib/xchat-plugins/xchat-autob5.so $(DESTDIR)/usr/lib/zh-autoconvert
+ 	install -m 644 include/*.h  $(DESTDIR)/usr/include
+ 	cd $(DESTDIR)/usr/bin; ln -s autogb $(DESTDIR)/usr/bin/autob5

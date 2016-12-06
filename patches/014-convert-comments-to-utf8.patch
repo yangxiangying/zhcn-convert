@@ -1,0 +1,156 @@
+Description: Convert comments in C source code from GB2312 to UTF-8
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/autogb.c
++++ b/autogb.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@debian.org>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@debian.org>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/b2g.c
++++ b/hzconvert/b2g.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/b2g_tables.c
++++ b/hzconvert/b2g_tables.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/b2u.c
++++ b/hzconvert/b2u.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/g2u.c
++++ b/hzconvert/g2u.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/g2u_tables.c
++++ b/hzconvert/g2u_tables.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/hz2gb.c
++++ b/hzconvert/hz2gb.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/hztogb.c
++++ b/hzconvert/hztogb.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/io.c
++++ b/hzconvert/io.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/judge.c
++++ b/hzconvert/judge.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@debian.org>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@debian.org>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+@@ -41,7 +41,7 @@
+ 	char HZ_END[]="~}";
+ 
+ 
+-/* first we look up "ÎÒ"  and "µÄ" ,both gb and big5
++/* first we look up "æˆ‘"  and "çš„" ,both gb and big5
+  * in the text.
+  */
+ 	for(phz=buff;phz<(buff+count);phz++){
+@@ -66,7 +66,7 @@
+ 		if(strstr(buff,HZ_START)!=NULL && strstr(buff,HZ_END)!=NULL){
+ 			return HZ_CODE;
+ 		}
+-		/*There is not "ÎÒ" and "µÄ" in the text
++		/*There is not "æˆ‘" and "çš„" in the text
+ 		 *So we test the text with a 400 words table.
+ 		 */
+ 		return j_code3(buff,count);		
+--- a/hzconvert/judge3.c
++++ b/hzconvert/judge3.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 2000 ÓÚ¹ã»Ô <ygh@debian.org>
++Copyright (C) 2000 äºŽå¹¿è¾‰ <ygh@debian.org>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/search.c
++++ b/hzconvert/search.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@debian.org>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@debian.org>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+--- a/hzconvert/unicode.c
++++ b/hzconvert/unicode.c
+@@ -1,6 +1,6 @@
+ /*
+ AutoConvert, a Chinese HZ/GB/Big5 encodings auto-converter
+-Copyright (C) 1999  ÓÚ¹ã»Ô  Yu Guanghui <ygh@dlut.edu.cn>
++Copyright (C) 1999  äºŽå¹¿è¾‰  Yu Guanghui <ygh@dlut.edu.cn>
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by

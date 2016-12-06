@@ -1,0 +1,3 @@
+examples/*
+contrib/convmail.pl
+contrib/debian-chinese-gateway.pl

@@ -1,0 +1,26 @@
+Description: Update XChat plugin Makefile to use GTK+-2.0
+ Fixes Bug#516056: "zh-autoconvert: Gtk1.2 about to be removed from Debian"
+ reported by Barry deFreese <bdefreese@debian.org> on 2009-02-18.
+ .
+ Committed to zh-autoconvert (0.3.16-3) on 2009-02-19.
+Author: Yu Guanghui <ygh@debian.org>
+Origin: vendor
+Bug-Debian: https://bugs.debian.org/516056
+Forwarded: no
+Reviewed-by: Anthony Fok <foka@debian.org>
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/contrib/xchat-plugins/Makefile
++++ b/contrib/xchat-plugins/Makefile
+@@ -5,8 +5,8 @@
+ 
+ all:xchat-autogb.so xchat-autob5.so
+ xchat-autogb.so:	xchat-autogb.c
+-	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autogb.so -o $@ $< -lhz -lc `gtk-config --cflags`
++	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autogb.so -o $@ $< -lhz -lc `pkg-config --cflags gtk+-2.0`
+ xchat-autob5.so:	xchat-autob5.c
+-	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autob5.so -o $@ $< -lhz  -lc `gtk-config --cflags`
++	$(CC) $(LDFLAGS) $(CFLAGS) $(LIBS) -I. -DSKIPCONFIG -fPIC -shared -Wl,-soname,xchat-autob5.so -o $@ $< -lhz  -lc `pkg-config --cflags gtk+-2.0`
+ clean:
+ 	rm -rf *~ xchat-autogb.so xchat-autob5.so

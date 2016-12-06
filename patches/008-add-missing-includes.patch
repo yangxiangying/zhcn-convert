@@ -1,0 +1,82 @@
+Description: Add missing includes that cause warnings or errors
+ Committed to zh-autoconvert (0.3.16-4) on 2015-11-17.
+Author: Anthony Fok <foka@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/hzconvert/b2u.c
++++ b/hzconvert/b2u.c
+@@ -23,6 +23,8 @@
+  *1999.10
+  */       
+ //$Header: /home/prog/autoconvert/hzconvert/b2u.c,v 1.6 2001/04/28 01:45:46 ygh Exp $
++
++#include <string.h>
+ #include "hz.h"
+ 
+ #define	BtoU_bad1 0xa1
+--- a/hzconvert/g2u.c
++++ b/hzconvert/g2u.c
+@@ -24,6 +24,7 @@
+  */       
+ //$Header: /home/prog/autoconvert/hzconvert/g2u.c,v 1.4 2001/04/28 01:45:46 ygh Exp $
+ 
++#include <string.h>
+ #include "hz.h"
+ 
+ #define	GtoU_bad1 0xa1
+--- a/hzconvert/unicode.c
++++ b/hzconvert/unicode.c
+@@ -24,6 +24,7 @@
+  */       
+ //$Header: /home/prog/autoconvert/hzconvert/unicode.c,v 1.5 2001/04/28 01:45:46 ygh Exp $
+ 
++#include <string.h>
+ #include "hz.h"
+ 
+ /*** UTF8 => UNICODE ***/
+--- a/contrib/xchat-plugins/xchat-autob5.c
++++ b/contrib/xchat-plugins/xchat-autob5.c
+@@ -1,6 +1,7 @@
+ #define USE_PLUGIN
+ 
+ #include <stdio.h>
++#include <string.h>
+ #include "xchat.h"
+ #include "plugin.h"
+ #include "../../include/hz.h"
+--- a/contrib/xchat-plugins/xchat-autogb.c
++++ b/contrib/xchat-plugins/xchat-autogb.c
+@@ -1,6 +1,7 @@
+ #define USE_PLUGIN
+ 
+ #include <stdio.h>
++#include <string.h>
+ #include "xchat.h"
+ #include "plugin.h"
+ #include "../../include/hz.h"
+--- a/hzconvert/judge.c
++++ b/hzconvert/judge.c
+@@ -25,7 +25,9 @@
+ */
+ 
+ //$Header: /home/prog/autoconvert/hzconvert/judge.c,v 1.2 2000/08/31 03:11:08 ygh Exp $
++
+ #include <stdio.h>
++#include <string.h>
+ 
+ #include "hz.h"
+ 
+--- a/autogb.c
++++ b/autogb.c
+@@ -26,6 +26,8 @@
+ //$Header: /home/prog/autoconvert/autogb.c,v 1.7 2001/04/23 14:18:06 ygh Exp $
+ 
+ #include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
+ #include <getopt.h>
+ #include "hz.h"
+ 

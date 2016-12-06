@@ -1,0 +1,53 @@
+Description: Delete empty default labels to make it build with gcc-3.4
+ Fixes Bug#264156: "FTBFS with gcc-3.4: label at end of compound statement"
+ reported by Andreas Jochens <aj@andaco.de> on 2004-08-07.
+ .
+ Committed to zh-autoconvert (0.3.14-2) on 2004-08-07.
+Author: Andreas Jochens <aj@andaco.de>
+Origin: vendor, 
+Bug-Debian: https://bugs.debian.org/264156
+Forwarded: no
+Reviewed-by: Yu Guanghui <ygh@debian.org>
+Last-Update: 2015-11-17
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/contrib/xchat-plugins/xchat-autob5.c
++++ b/contrib/xchat-plugins/xchat-autob5.c
+@@ -88,8 +88,6 @@ int	autob5_chanmsg (struct server *serv,
+ 			PrintText(sess," Big\n");
+ #endif
+ 			break;
+-		default:
+-			;
+ 	}
+ 
+ 	XP_CALLNEXT(chanmsg_next, serv, channel, from, text, a, c);
+@@ -127,8 +125,6 @@ int	autob5_privmsg (struct server *serv,
+ 			PrintText(sess," Big\n");
+ #endif
+ 			break;
+-		default:
+-			;
+ 	}
+ 
+ 	XP_CALLNEXT(privmsg_next, serv, from, ip, text, a, c);
+--- a/contrib/xchat-plugins/xchat-autogb.c
++++ b/contrib/xchat-plugins/xchat-autogb.c
+@@ -88,8 +88,6 @@ int	autogb_chanmsg (struct server *serv,
+ 			PrintText(sess," Big\n");
+ #endif
+ 			break;
+-		default:
+-			;
+ 	}
+ 
+ 	XP_CALLNEXT(chanmsg_next, serv, channel, from, text, a, c);
+@@ -127,8 +125,6 @@ int	autogb_privmsg (struct server *serv,
+ 			PrintText(sess," Big\n");
+ #endif
+ 			break;
+-		default:
+-			;
+ 	}
+ 
+ 	XP_CALLNEXT(privmsg_next, serv, from, ip, text, a, c);
